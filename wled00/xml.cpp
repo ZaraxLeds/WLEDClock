@@ -674,6 +674,13 @@ void getSettingsJS(byte subPage, Print& settingsScript)
     UsermodManager::appendConfigData(settingsScript);
   }
 
+  if (subPage == SUBPAGE_LEDCLOCK) // LedClock settings
+  {
+    // LedClock settings are handled by the usermod via addToConfig/readFromConfig
+    // The settings page will load values via JavaScript
+    UsermodManager::appendConfigData(settingsScript);
+  }
+
   if (subPage == SUBPAGE_2D) // 2D matrices
   {
     printSetFormValue(settingsScript,PSTR("SOMP"),strip.isMatrix);

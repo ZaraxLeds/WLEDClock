@@ -1,0 +1,4 @@
+{
+  "name": "ledclock",
+  "build": { "libArchive": false }
+}

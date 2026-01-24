@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pio run:*)",
+      "Bash(python -m platformio run:*)",
+      "Bash(\"%USERPROFILE%\\\\.platformio\\\\penv\\\\Scripts\\\\platformio.exe\" run -d \"c:\\\\GitHub\\\\ZaraxLeds\\\\WLEDClock\")",
+      "Bash(cmd /c:*)",
+      "Bash(/c/Users/picip/.platformio/penv/Scripts/platformio.exe pkg install:*)"
+    ]
+  }
+}

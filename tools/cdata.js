@@ -363,6 +363,12 @@ writeChunks(
       filter: "html-minify",
     },
     {
+      file: "settings_ledclock.htm",
+      name: "PAGE_settings_ledclock",
+      method: "gzip",
+      filter: "html-minify",
+    },
+    {
       file: "settings_pin.htm",
       name: "PAGE_settings_pin",
       method: "gzip",

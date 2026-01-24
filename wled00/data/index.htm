@@ -9,6 +9,7 @@
 	<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAMAAAAKE/YAAAAANlBMVEUAAAAAKacAPv8APv8APv8APv8APv8AKacAQv8AJZsAKacAKacAPv8APv8AL8MAPv8APv8AQv/mTD7uAAAAEHRSTlMAf1mvpgzzka9/Vy3wnX9ic6GVaQAAAQhJREFUeNrt3EtuwkAQRdGGYAyYT9j/ZqN4GNkv9gSV4ZwVXJU8cVerGwAAAAAAUNTl9LXY6dJq6J/fiz37VsNuTfSu1SB6hmjRgWjRgWjRgWjRgWjRgehf5y1G70r/2Ha3w5T7foWhvVg3Pbxzq6w7lv5MRa8iWnQgWnQgWnQgWnQgWnQgenQtHT3spzxqT7p/+/MX0aJFj0SLDkSLDkSLDkSLDkSL/s/n7OhXRR8fNXb0q6KvrbSZSXetMtEzRIsORIsORIsORIsORIsORIdr/i+PHvYr3A9Tbsui7egn+2pf83//ky7RokWPRIsORIsORIsORIsORG/2gbhNPsUHAAAAAAD89QMg+PZb+jO0tAAAAABJRU5ErkJggg==" sizes="180x180"/>
 	<title>WLED</title>
 	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="index_ledclock.css">
 </head>
 <body onload="onLoad()">
 
@@ -20,6 +21,7 @@
 	<div class="tab top">
 		<div class="btnwrap">
 			<button id="buttonPower" onclick="togglePower()" class="tgl"><i class="icons">&#xe08f;</i><p class="tab-label">Power</p></button>
+			<button id="lc-buttonClock" onclick="LC.toggleClock()"><i class="icons">&#xe000;</i><p class="tab-label">Clock</p></button>
 			<button id="buttonNl" onclick="toggleNl()"><i class="icons">&#xe2a2;</i><p class="tab-label">Timer</p></button>
 			<button id="buttonSync" onclick="toggleSync()"><i class="icons">&#xe116;</i><p class="tab-label">Sync</p></button>
 			<button id="buttonSr" onclick="toggleLiveview()"><i class="icons">&#xe410;</i><p class="tab-label">Peek</p></button>
@@ -336,6 +338,55 @@
 	<span class="h">Made with&#32;<span id="heart">&#10084;&#xFE0E;</span>&#32;by&#32;<a href="https://github.com/Aircoookie/" target="_blank">Aircoookie</a>&#32;and the&#32;<a href="https://wled.discourse.group/" target="_blank">WLED community</a></span>
 </div>
 
+<div id="lc-clock" class="modal">
+	<div id="lc-header">
+		<h3>Clock Mode</h3>
+		<button class="btn infobtn lc-mode" onclick="LC.setMode(0)"><i class="icons no-margin">&#xe000;</i> Clock</button>
+		<button class="btn infobtn lc-mode" onclick="LC.setMode(1)"><i class="icons no-margin">&#xe001;</i> Timer</button>
+		<button class="btn infobtn lc-mode" onclick="LC.setMode(2)"><i class="icons no-margin">&#xe325;</i> Stopwatch</button>
+		<hr>
+	</div>
+	<div id="lc-modes">
+		<div>
+			<div id="lc-mode-clock">
+				<span>The device shows the current time.</span>
+				<button class="btn infobtn" onclick="location.href='/settings/time'"><i class="icons no-margin">&#xe0a2;</i> Time &amp; Macros</button>
+				<button class="btn infobtn" onclick="location.href='/settings/ledclock'"><i class="icons no-margin">&#xe0a2;</i> Clock Settings</button>
+			</div>
+			<div id="lc-mode-timer">
+				<div id="lc-timer-input">
+					<select id="lc-timer-h" oninput="LC.timerSet()"></select><small>h</small>
+					<select id="lc-timer-m" oninput="LC.timerSet()"></select><small>m</small>
+					<select id="lc-timer-s" oninput="LC.timerSet()"></select><small>s</small>
+				</div>
+				<div id="lc-timer-buttons">
+					<button id="lc-tm-reset" class="btn infobtn" onclick="LC.timerReset()"><i class="icons no-margin">&#xe116;</i> Reset</button>
+					<button id="lc-tm-toggle" class="btn infobtn" onclick="LC.timerToggle()"><i class="icons no-margin">&#xe002;</i> <span>Start</span></button>
+					<button id="lc-tm-incr" class="btn infobtn" onclick="LC.timerIncrease(60000)"><i class="icons no-margin">&#xe18a;</i> 1 Minute</button>
+				</div>
+				<button class="btn infobtn" onclick="location.href='/settings/ledclock#timer'"><i class="icons no-margin">&#xe0a2;</i> Timer Settings</button>
+			</div>
+			<div id="lc-mode-stopwatch">
+				<div id="lc-stopwatch-buttons">
+					<button id="lc-sw-reset" class="btn infobtn" onclick="LC.stopwatchReset()"><i class="icons no-margin">&#xe116;</i> Reset</button>
+					<button id="lc-sw-toggle" class="btn infobtn" onclick="LC.stopwatchToggle()"><i class="icons no-margin">&#xe002;</i> <span>Start</span></button>
+					<button id="lc-sw-laptime" class="btn infobtn" onclick="LC.stopwatchLapTime()"><i class="icons no-margin">&#xe004;</i> Lap Time</button>
+				</div>
+				<div class="lc-fader">
+					<div id="lc-laptimes">
+						<h4>#</h4><h4>Lap Time</h4><h4>Split Time</h4>
+					</div>
+				</div>
+				<button class="btn infobtn" onclick="location.href='/settings/ledclock#stopwatch'"><i class="icons no-margin">&#xe0a2;</i> Stopwatch Settings</button>
+			</div>
+		</div>
+	</div>
+	<div id="lc-footer">
+		<hr>
+		<button class="btn infobtn" onclick="LC.toggleClock()">Close</button><br>
+	</div>
+</div>
+
 <div id="nodes" class="modal">
 	<button class="btn btn-xs close" onclick="toggleNodes()"><i class="icons rot45">&#xe18a;</i></button>
 	<div id="ndlt">WLED instances</div>
@@ -368,5 +419,6 @@
 <script src="iro.js"></script>
 <script src="rangetouch.js"></script>
 <script src="index.js"></script>
+<script src="ledclock.js"></script>
 </body>
 </html>
